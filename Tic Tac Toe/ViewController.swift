@@ -15,10 +15,41 @@ class ViewController: UIViewController {
     
     @IBOutlet var playAgain: UIButton!
     
+    @IBOutlet var resetButton: UIButton!
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        
+        resetButton.isHidden = true
+        
+        playAgainPressed(self)
+        
+        
+    }
+    
     @IBAction func playAgainPressed(_ sender: Any) {
         
-        activePlayer = 1 //1 is O, 2 is X
+        let diceRoll = arc4random_uniform(2)
         
+        if diceRoll == 1 {
+            
+            
+            activePlayer = 1
+            
+            playerAnnounce.text = "X's play first"
+            
+            
+            
+            playerAnnounce.isHidden = false
+            
+        } else {
+            
+            activePlayer = 2
+            
+            playerAnnounce.text = "O's play first"
+            
+            playerAnnounce.isHidden = false
+            
+        }
         activeGame = true
         
         gameState = [0,0,0,0,0,0,0,0,0] // 0 = empty, 1 = O's, 2 = X's
@@ -36,8 +67,8 @@ class ViewController: UIViewController {
             
             }
         }
+
         
-    selectPlayer1.isHidden = false
     }
     
   var activePlayer = 1 //1 is O, 2 is X
@@ -45,7 +76,7 @@ class ViewController: UIViewController {
   var activeGame = true
     
   var gameState = [0,0,0,0,0,0,0,0,0] // 0 = empty, 1 = O's, 2 = X's
-    
+   
   let winningCombinations = [[0,1,2],[3,4,5,],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
     
   var xImage = UIImage(named: "cross.png") as UIImage!
@@ -107,6 +138,11 @@ class ViewController: UIViewController {
     }
   
         }
+        
+        if !gameState.contains(0) {
+        
+            resetButton.isHidden = false
+        }
     }
 
     @IBOutlet var playerAnnounce: UILabel!
@@ -116,7 +152,6 @@ class ViewController: UIViewController {
     
     @IBAction func selectPlayer(_ sender: Any) {
         
-        selectPlayer1.isHidden = true
         
         
         let diceRoll = arc4random_uniform(2)
@@ -150,7 +185,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        playerAnnounce.isHidden = true
+        resetButton.isHidden = true
+        
+        let diceRoll = arc4random_uniform(2)
+        
+        if diceRoll == 1 {
+            
+            
+            activePlayer = 1
+            
+            playerAnnounce.text = "X's play first"
+            
+            
+            
+            playerAnnounce.isHidden = false
+            
+        } else {
+            
+            activePlayer = 2
+            
+            playerAnnounce.text = "O's play first"
+            
+            playerAnnounce.isHidden = false
+        }
+        
+
         winnerLabel.isHidden = true
         playAgain.isHidden = true
         
@@ -159,6 +218,7 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
